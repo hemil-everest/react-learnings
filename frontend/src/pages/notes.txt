@@ -1,0 +1,161 @@
+1. App.tsx renders things and component/ will have components defined
+
+2. Now React returns components where JSX — a mix of HTML and JavaScript — not plain HTML.
+
+3. Traditionally react component return 1 thing at time, but We can return multiple things with <Fragments> component code </Fragments> or Return (</>  component code)
+
+4. Conditional rendering is done using {condition && JSX} or ternary operators, To render data dynamically put {data}
+
+5. return components wrapped around in return(
+    .... /code
+)
+
+6. We should give unique key to items so react knows which items to update dynamically
+
+7. In react each element has property onClick{(event)}, Event is browserEvent, Synthetic event a wrapper around native browser event
+
+8. for complex logic, move function logic to variable
+
+9. useState is hook -> we can tell component can change and initialize useState(-1) as invalid, empty initial state
+
+10. When we define normal variable and don't put it in state, then whatever value was changed to will be lost as soon as component is re-rendered as it will be redefined again from scratch.  
+
+11. useState() returns array  //const [name of the state, function to update the state] = useState(default value of state)
+eg:   const [selectedIndex, setSelectedIndex] = useState(-1)
+
+Eg:
+---------------------------------------------------------------
+import { useState } from "react";
+import "./ListGroup.css";
+
+interface Props {
+  items: string[];
+  heading: string;
+  onSelectItem: (item: string) => void;
+}
+
+function ListGroup({ items, heading, onSelectItem }: Props) {
+  const [selectedIndex, setSelectedIndex] = useState(-1);
+
+  return (
+    <>
+      <h1>{heading}</h1>
+      {items.length === 0 && <p>No items found</p>}
+      <ul className="list-group">
+        {items.map((item, index) => (
+          <li
+            className={
+              selectedIndex === index
+                ? "list-group-item active"
+                : "list-group-item"
+            }
+            key={item}
+            onClick={() => {
+              setSelectedIndex(index);
+              onSelectItem(item);
+            }}
+          >
+            {item}
+          </li>
+        ))}
+      </ul>
+    </>
+  );
+}
+
+export default ListGroup;
+-------------------------
+
+import ListGroup from "./ListGroup";
+
+function App() {
+  const items = ["New York", "San Francisco", "Tokyo", "London", "Paris"];
+
+  const handleSelectItem = (item: string) => {
+    console.log("Selected:", item);
+  };
+
+  return (
+    <div>
+      <ListGroup
+        items={items}
+        heading="Cities"
+        onSelectItem={handleSelectItem}
+      />
+    </div>
+  );
+}
+
+export default App;
+----------------------------------------------
+12.Props are inputs to components, passed from parent to child. They are immutable.
+Eg: interface Props{
+    items: String[];
+    heading: string;
+}, now pass to function function ListGroup({items, heading}: Props) {...//}
+
+13. a. onSelectItem is property and function component has we can implement inline for component to let parent element know in App.ts for reference in child component value is selected... Refer above example
+b. onSelectItem or similar props are callback functions passed from parent to child and used for communication back
+
+14. className=active to highlight selected component.
+ className={
+              selectedIndex === index
+                ? "list-group-item active"
+                : "list-group-item"
+            }
+
+15. change state of selectedIndex onClick{setSelectedIndex(index)}. Refer example above for state change and rerender component.
+16. We have to mention parent class which item is selected, so OnSelectItem() function used
+Eg:  onClick={() => {
+              setSelectedIndex(index);
+              onSelectItem(item);
+            }}
+
+
+17. Props: Input passed to component, Similar to function args, Immutable (Imp)
+State: Data managed by a component, similar to local variables, Mutable(Data state that can change overtime)
+
+18. children Prop is passed from child to parent component for dynamic value handling
+
+interface Props{
+   // children: string
+   children: ReactNode (for passing parent argument type)
+}
+
+19. children prop allows passing dynamic content between components:
+import Button from "./Button";
+------------------------
+function App() {
+  return (
+    <div>
+      <h1>Reusable Button Example</h1>
+      <Button>Increment</Button>
+    </div>
+  );
+}
+
+export default App;
+
+--------------------------------------------
+import { ReactNode, useState } from "react";
+
+interface Props {
+  children: ReactNode;
+}
+
+function Button({ children }: Props) {
+  const [count, setCount] = useState(0);
+
+  const handleClick = () => {
+    setCount(count + 1);
+  };
+
+  return (
+    <button onClick={handleClick}>
+      {children} (Clicked {count})
+    </button>
+  );
+}
+
+export default Button;
+

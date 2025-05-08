@@ -1,0 +1,42 @@
+Unique Keys: When rendering lists, provide a unique key to each item to help React efficiently update the DOM.
+
+Event Handling: React elements have event handlers like onClick={(event) => ...}. These events are synthetic, meaning they wrap native browser events for cross-browser compatibility.
+
+Complex Logic: Move complex logic into separate functions or variables for better readability and maintainability.
+
+useState Hook: useState is used to manage state in functional components. Initialize with a default value, e.g., useState(-1) for invalid or empty initial states.
+
+State vs. Variables: Variables not managed by state will reset on re-render. Use useState to persist values across renders.
+
+useState Syntax: useState returns an array:
+
+Example:
+
+Props: Props are inputs passed to components, similar to function arguments. They are immutable. Example:
+
+onSelectItem: A property or function passed as a prop to handle item selection. It can be implemented inline or as a separate function.
+
+Dynamic Class Names: Use conditional logic to apply classes dynamically. Example:
+
+State Updates on Click: Update state dynamically using event handlers. Example:
+
+Parent-Child Communication: Use functions like onSelectItem() to notify the parent component about changes in the child component.
+
+Props vs. State:
+
+Props: Inputs passed to a component, immutable, similar to function arguments.
+State: Data managed within a component, mutable, similar to local variables.
+Children Prop: Used to pass dynamic content from parent to child components. Example:
+
+Empty State Handling: Use conditional rendering to handle empty states. Example:
+
+Reusable Components: Design components to be reusable by passing props like items, heading, and event handlers.
+
+Fragments: Use <Fragment> or shorthand <>...</> to group multiple elements without adding extra nodes to the DOM.
+
+Best Practices:
+
+Keep components small and focused.
+Use props for data that doesn't change and state for data that does.
+Use unique keys for list items.
+Separate logic from JSX for better readability.
